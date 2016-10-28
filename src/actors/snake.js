@@ -1,6 +1,7 @@
 import { UP, DOWN, LEFT, RIGHT } from 'constants/directions';
 import { isSame } from 'core/is-same';
 import { scaledPosition } from 'core/scaled-position';
+import { snakeTouchesFood } from './food';
 
 let prevTick = 0;
 
@@ -10,6 +11,7 @@ export const setup = {
       x: 1,
       y: 1,
     },
+    tail: [],
     dir: RIGHT,
     speed: 1,
   },
@@ -68,6 +70,17 @@ export function update({ timestamp, state = {} }) {
       ...nextState,
       ...updatePos(state.snake.dir, state.snake.position, state.game.width, state.game.height),
     };
+
+    // update tail
+
+
+    // grow a tail
+    if (snakeTouchesFood(nextState, state.food)) {
+      nextState = {
+        ...nextState,
+        tail: state.snake.tail.concat(state.snake.position),
+      };
+    }
   }
 
   return {
@@ -77,14 +90,21 @@ export function update({ timestamp, state = {} }) {
   };
 }
 
+function createSnakePartDrawer(ctx, scale) {
+  return (position) => {
+    ctx.fillRect(
+      scaledPosition(position.x, scale),
+      scaledPosition(position.y, scale),
+      scale,
+      scale
+    );
+  };
+}
+
 export function draw({ state = setup, canvas = null }) {
   const ctx = canvas.getContext();
 
   ctx.fillStyle = 'white';
-  ctx.fillRect(
-    scaledPosition(state.snake.position.x, state.game.scale),
-    scaledPosition(state.snake.position.y, state.game.scale),
-    state.game.scale,
-    state.game.scale
-  );
+  createSnakePartDrawer(ctx, state.game.scale)(state.snake.position);
+  state.snake.tail.forEach(createSnakePartDrawer(ctx, state.game.scale));
 }

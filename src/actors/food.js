@@ -21,6 +21,10 @@ function randomPositionFood(snake = snakeSetup.snake, gameWidth, gameHeight) {
   return { x, y };
 }
 
+export function snakeTouchesFood(snake, food) {
+  return snake.position.x === food.x && snake.position.y === food.y;
+}
+
 export function setup(currentState, width, height) {
   return {
     food: randomPositionFood(currentState.snake, width, height),
@@ -28,7 +32,13 @@ export function setup(currentState, width, height) {
 }
 
 export function update({ state = {} }) {
-  return state.food;
+  let newState = { ...state.food };
+
+  if (snakeTouchesFood(state.snake, state.food)) {
+    newState = randomPositionFood(state.snake, state.game.width, state.game.height);
+  }
+
+  return { food: newState };
 }
 
 export function draw({ state = setup, canvas = null }) {
