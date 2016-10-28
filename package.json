@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "description": "webpack starter with babel",
   "main": "./src",
-  "scripts": {},
+  "scripts": {
+    "serve": "npm run empty-dist && npm run copy-assets && npm run dev-server",
+    "empty-dist": "rm -rf dist && mkdir dist && mkdir dist/assets",
+    "copy-assets": "cp -r assets/* dist/assets/ && cp assets/index.html dist/index.html",
+    "dev-server": "node ./node_modules/.bin/webpack-dev-server --config webpack.config.js --content-base dist/"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Gaya/webpack-babel-starter.git"
