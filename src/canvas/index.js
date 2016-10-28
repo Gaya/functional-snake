@@ -9,10 +9,17 @@ function createCanvasElement(width = 600, height = 600) {
   return element.getContext('2d');
 }
 
-function initialize(width = 600, height = 600) {
-  const context = createCanvasElement(width, height);
+function getContext() {
+  return this.context;
+}
 
-  return context;
+function initialize(width = 600, height = 600) {
+  const instance = {
+    context: createCanvasElement(width, height),
+    getContext,
+  };
+
+  return instance;
 }
 
 export default initialize;

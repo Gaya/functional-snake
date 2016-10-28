@@ -2,7 +2,7 @@ import createCanvas from 'canvas';
 import { setup, update, draw } from 'engine';
 
 let state = {};
-const canvas = createCanvas();
+const canvas = createCanvas(600, 600);
 
 // get initial state after setup
 state = setup({ state });
@@ -13,7 +13,8 @@ function tick(timestamp) {
 
   // draw canvas from state
   draw({ state, canvas });
+
+  window.requestAnimationFrame(tick);
 }
 
 tick();
-window.requestAnimationFrame(tick);
