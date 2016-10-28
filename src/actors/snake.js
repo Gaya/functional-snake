@@ -27,6 +27,10 @@ function updatePos(dir, currentPosition) {
   };
 }
 
+function colidesWithTail(position, tail) {
+  return tail.filter(tailPosition => isSame(position, tailPosition)).length > 0;
+}
+
 export function update({ timestamp, state = {} }) {
   let nextState = { ...state.snake };
 
@@ -66,10 +70,11 @@ export function update({ timestamp, state = {} }) {
       ...updatePos(state.snake.dir, state.snake.position),
     };
 
-    // check if colides with walls
+    // check if colides with walls or tail
     if (
       (nextState.position.x < 0 || nextState.position.x >= state.game.width) ||
-      (nextState.position.y < 0 || nextState.position.y >= state.game.height)
+      (nextState.position.y < 0 || nextState.position.y >= state.game.height) ||
+      colidesWithTail(nextState.position, state.snake.tail)
     ) {
       nextState = {
         ...state.snake,
