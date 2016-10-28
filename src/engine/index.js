@@ -1,11 +1,11 @@
-export function setup() {
+export function setup({ state = {} }) {
 
 }
 
-export function update() {
+export function update({ timestamp = 0, state = {} }) {
 
 }
 
-export function draw() {
+export function draw({ state = {}, canvas = null }) {
 
 }
