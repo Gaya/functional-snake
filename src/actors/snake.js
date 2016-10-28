@@ -14,7 +14,6 @@ export const setup = {
     },
     tail: [],
     dir: RIGHT,
-    speed: 1,
   },
 };
 
@@ -37,7 +36,7 @@ export function update({ timestamp, state = {} }) {
   if (
     !state.game.paused &&
     !state.snake.dead &&
-    timestamp - (100 / (0.7 + (0.3 * state.snake.speed))) > prevTick
+    timestamp - (100 / (0.9 + (0.05 * state.snake.tail.length))) > prevTick
   ) {
     prevTick = timestamp;
 
