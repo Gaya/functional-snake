@@ -7,6 +7,7 @@ let prevTick = 0;
 
 export const setup = {
   snake: {
+    dead: false,
     position: {
       x: 1,
       y: 1,
@@ -17,21 +18,11 @@ export const setup = {
   },
 };
 
-function calcPosition(pos, bounds) {
-  if (pos >= bounds - 1) {
-    return bounds - 1;
-  } else if (pos < 0) {
-    return 0;
-  }
-
-  return pos;
-}
-
-function updatePos(dir, currentPosition, gameWidth, gameHeight) {
+function updatePos(dir, currentPosition) {
   return {
     position: {
-      x: calcPosition(currentPosition.x + dir.x, gameWidth),
-      y: calcPosition(currentPosition.y + dir.y, gameHeight),
+      x: currentPosition.x + dir.x,
+      y: currentPosition.y + dir.y,
     },
   };
 }
@@ -39,7 +30,11 @@ function updatePos(dir, currentPosition, gameWidth, gameHeight) {
 export function update({ timestamp, state = {} }) {
   let nextState = { ...state.snake };
 
-  if (timestamp - (100 / (0.7 + (0.3 * state.snake.speed))) > prevTick) {
+  if (
+    !state.game.paused &&
+    !state.snake.dead &&
+    timestamp - (100 / (0.7 + (0.3 * state.snake.speed))) > prevTick
+  ) {
     prevTick = timestamp;
 
     // update direction
@@ -68,22 +63,35 @@ export function update({ timestamp, state = {} }) {
     // update the position
     nextState = {
       ...nextState,
-      ...updatePos(state.snake.dir, state.snake.position, state.game.width, state.game.height),
+      ...updatePos(state.snake.dir, state.snake.position),
     };
 
-    // grow a tail
-    if (snakeTouchesFood(nextState, state.food)) {
+    // check if colides with walls
+    if (
+      (nextState.position.x < 0 || nextState.position.x >= state.game.width) ||
+      (nextState.position.y < 0 || nextState.position.y >= state.game.height)
+    ) {
       nextState = {
-        ...nextState,
-        tail: state.snake.tail.concat(state.snake.position),
+        ...state.snake,
+        dead: true,
       };
-    } else if (state.snake.tail.length > 0) {
-      nextState = {
-        ...nextState,
-        tail: state.snake.tail
-          .slice(1, state.snake.tail.length)
-          .concat(state.snake.position),
-      };
+    }
+
+    if (!nextState.dead) {
+      // grow a tail
+      if (snakeTouchesFood(nextState, state.food)) {
+        nextState = {
+          ...nextState,
+          tail: state.snake.tail.concat(state.snake.position),
+        };
+      } else if (state.snake.tail.length > 0) {
+        nextState = {
+          ...nextState,
+          tail: state.snake.tail
+            .slice(1, state.snake.tail.length)
+            .concat(state.snake.position),
+        };
+      }
     }
   }
 
