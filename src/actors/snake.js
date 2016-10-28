@@ -1,4 +1,6 @@
 import { UP, DOWN, LEFT, RIGHT } from 'constants/directions';
+import { isSame } from 'core/is-same';
+
 let prevTick = 0;
 
 export const setup = {
@@ -42,22 +44,22 @@ export function update({ timestamp, state = {} }) {
     prevTick = timestamp;
 
     // update direction
-    if (state.input.up) {
+    if (state.input.up && !isSame(state.snake.dir, DOWN)) {
       nextState = {
         ...nextState,
         dir: UP,
       };
-    } else if (state.input.down) {
+    } else if (state.input.down && !isSame(state.snake.dir, UP)) {
       nextState = {
         ...nextState,
         dir: DOWN,
       };
-    } else if (state.input.left) {
+    } else if (state.input.left && !isSame(state.snake.dir, RIGHT)) {
       nextState = {
         ...nextState,
         dir: LEFT,
       };
-    } else if (state.input.right) {
+    } else if (state.input.right && !isSame(state.snake.dir, LEFT)) {
       nextState = {
         ...nextState,
         dir: RIGHT,
