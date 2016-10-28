@@ -1,5 +1,6 @@
 import { update as updateBg, draw as drawBg } from 'actors/background';
 import { setup as setupSnake, update as updateSnake, draw as drawSnake } from 'actors/snake';
+import { setup as setupFood, update as updateFood, draw as drawFood } from 'actors/food';
 
 import { listenToInput, inputState } from './input';
 
@@ -9,6 +10,7 @@ export function setup({ state = {} }) {
   return {
     ...state,
     ...setupSnake,
+    ...setupFood(state, 60, 60),
     input: inputState().input,
     game: {
       width: 60,
@@ -23,6 +25,7 @@ export function update({ timestamp = 0, state = {} }) {
     inputState,
     updateBg,
     updateSnake,
+    updateFood,
   ].map(
     f =>
       Object.assign({}, f({ timestamp, state }))
@@ -36,5 +39,6 @@ export function draw({ state = {}, canvas = null }) {
   [
     drawBg,
     drawSnake,
+    drawFood,
   ].forEach(f => f({ state, canvas }));
 }

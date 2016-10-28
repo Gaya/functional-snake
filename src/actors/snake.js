@@ -1,5 +1,6 @@
 import { UP, DOWN, LEFT, RIGHT } from 'constants/directions';
 import { isSame } from 'core/is-same';
+import { scaledPosition } from 'core/scaled-position';
 
 let prevTick = 0;
 
@@ -31,10 +32,6 @@ function updatePos(dir, currentPosition, gameWidth, gameHeight) {
       y: calcPosition(currentPosition.y + dir.y, gameHeight),
     },
   };
-}
-
-function snakePos(pos, scale) {
-  return pos * scale;
 }
 
 export function update({ timestamp, state = {} }) {
@@ -85,8 +82,8 @@ export function draw({ state = setup, canvas = null }) {
 
   ctx.fillStyle = 'white';
   ctx.fillRect(
-    snakePos(state.snake.position.x, state.game.scale),
-    snakePos(state.snake.position.y, state.game.scale),
+    scaledPosition(state.snake.position.x, state.game.scale),
+    scaledPosition(state.snake.position.y, state.game.scale),
     state.game.scale,
     state.game.scale
   );
