@@ -6,7 +6,10 @@ function positionOnSnake(snake, x, y) {
     return true;
   }
 
-  return (snake.position.x === x && snake.position.y === y);
+  return (snake.position.x === x && snake.position.y === y) ||
+    snake.tail
+      .filter(tailPosition => tailPosition.x === x && tailPosition.y === y)
+      .length > 0;
 }
 
 function randomPositionFood(snake = snakeSetup.snake, gameWidth, gameHeight) {
