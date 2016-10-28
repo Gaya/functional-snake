@@ -6,6 +6,12 @@ module.exports = {
     filename: 'build.js',
   },
   devtool: 'source-map',
+  resolve: {
+    root: [
+      `${__dirname}/src`,
+      `${__dirname}/node_modules`,             // npm
+    ],
+  },
   module: {
     loaders: [
       {
