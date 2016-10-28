@@ -1,2 +1,3 @@
-// code here
-document.write('Hello world');
+import createCanvas from 'canvas';
+
+const canvas = createCanvas();
