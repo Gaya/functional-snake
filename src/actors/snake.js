@@ -71,14 +71,18 @@ export function update({ timestamp, state = {} }) {
       ...updatePos(state.snake.dir, state.snake.position, state.game.width, state.game.height),
     };
 
-    // update tail
-
-
     // grow a tail
     if (snakeTouchesFood(nextState, state.food)) {
       nextState = {
         ...nextState,
         tail: state.snake.tail.concat(state.snake.position),
+      };
+    } else if (state.snake.tail.length > 0) {
+      nextState = {
+        ...nextState,
+        tail: state.snake.tail
+          .slice(1, state.snake.tail.length)
+          .concat(state.snake.position),
       };
     }
   }
