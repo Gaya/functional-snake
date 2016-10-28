@@ -1,3 +1,4 @@
+import { GAME_WIDTH, GAME_HEIGHT, GAME_SCALE } from 'constants/game';
 import { update as updateBg, draw as drawBg } from 'actors/background';
 import { setup as setupSnake, update as updateSnake, draw as drawSnake } from 'actors/snake';
 import { setup as setupFood, update as updateFood, draw as drawFood } from 'actors/food';
@@ -10,12 +11,12 @@ export function setup({ state = {} }) {
   return {
     ...state,
     ...setupSnake,
-    ...setupFood(state, 60, 60),
+    ...setupFood(state, GAME_WIDTH, GAME_HEIGHT),
     input: inputState().input,
     game: {
-      width: 60,
-      height: 60,
-      scale: 10,
+      width: GAME_WIDTH,
+      height: GAME_HEIGHT,
+      scale: GAME_SCALE,
     },
   };
 }
