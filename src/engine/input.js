@@ -4,10 +4,10 @@ let state = {};
 
 export function inputStateByKeyCode(currentState, keyCode, off = false) {
   return {
-    up: keyCode === UP_KEY,
-    down: keyCode === DOWN_KEY,
-    left: keyCode === LEFT_KEY,
-    right: keyCode === RIGHT_KEY,
+    up: keyCode === UP_KEY && (!currentState.up || off),
+    down: keyCode === DOWN_KEY && (!currentState.down || off),
+    left: keyCode === LEFT_KEY && (!currentState.left || off),
+    right: keyCode === RIGHT_KEY && (!currentState.right || off),
     keyCode,
   };
 }
