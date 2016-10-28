@@ -13,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/Gaya/webpack-babel-starter/issues"
   },
-  "homepage": "https://github.com/Gaya/webpack-babel-starter#readme"
+  "homepage": "https://github.com/Gaya/webpack-babel-starter#readme",
+  "devDependencies": {
+    "eslint": "^3.8.1"
+  }
 }
