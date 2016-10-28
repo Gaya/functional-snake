@@ -4,12 +4,19 @@ import { setup, update, draw } from 'engine';
 let state = {};
 const canvas = createCanvas(600, 600);
 
+function setState(newState) {
+  state = {
+    ...state,
+    ...newState,
+  };
+}
+
 // get initial state after setup
-state = setup({ state });
+setState(setup({ state, setState }));
 
 function tick(timestamp) {
   // calculate new state
-  state = update({ timestamp, state });
+  setState(update({ timestamp, state }));
 
   // draw canvas from state
   draw({ state, canvas });

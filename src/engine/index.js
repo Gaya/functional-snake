@@ -1,7 +1,11 @@
 import { update as updateBg, draw as drawBg } from 'actors/background';
 import { setup as setupSnake, update as updateSnake, draw as drawSnake } from 'actors/snake';
 
-export function setup({ state = {} }) {
+import listenToInput from './input';
+
+export function setup({ state = {}, setState = () => {} }) {
+  listenToInput(setState);
+
   return {
     ...state,
     ...setupSnake,
