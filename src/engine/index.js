@@ -1,11 +1,14 @@
 import { update as updateBg, draw as drawBg } from 'actors/background';
+import { setup as setupSnake, update as updateSnake, draw as drawSnake } from 'actors/snake';
 
 export function setup({ state = {} }) {
   return {
     ...state,
+    ...setupSnake,
     game: {
-      width: 600,
-      height: 600,
+      width: 60,
+      height: 60,
+      scale: 10,
     },
   };
 }
@@ -13,6 +16,7 @@ export function setup({ state = {} }) {
 export function update({ timestamp = 0, state = {} }) {
   return [
     updateBg,
+    updateSnake,
   ].map(
     f =>
       Object.assign({}, f({ timestamp, state }))
@@ -25,5 +29,6 @@ export function update({ timestamp = 0, state = {} }) {
 export function draw({ state = {}, canvas = null }) {
   [
     drawBg,
+    drawSnake,
   ].forEach(f => f({ state, canvas }));
 }
