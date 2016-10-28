@@ -1,14 +1,15 @@
 import { update as updateBg, draw as drawBg } from 'actors/background';
 import { setup as setupSnake, update as updateSnake, draw as drawSnake } from 'actors/snake';
 
-import listenToInput from './input';
+import { listenToInput, inputState } from './input';
 
-export function setup({ state = {}, setState = () => {} }) {
-  listenToInput(setState);
+export function setup({ state = {} }) {
+  listenToInput();
 
   return {
     ...state,
     ...setupSnake,
+    input: inputState().input,
     game: {
       width: 60,
       height: 60,
@@ -19,6 +20,7 @@ export function setup({ state = {}, setState = () => {} }) {
 
 export function update({ timestamp = 0, state = {} }) {
   return [
+    inputState,
     updateBg,
     updateSnake,
   ].map(

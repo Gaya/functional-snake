@@ -1,5 +1,5 @@
-export function update({ state = {} }) {
-  return state;
+export function update() {
+  return {};
 }
 
 export function draw({ state = { game: { width: 60, height: 60 } }, canvas = null }) {

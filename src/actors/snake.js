@@ -36,24 +36,45 @@ function snakePos(pos, scale) {
 }
 
 export function update({ timestamp, state = {} }) {
-  let nextState = { ...state };
+  let nextState = { ...state.snake };
 
   if (timestamp - (100 / (0.7 + (0.3 * state.snake.speed))) > prevTick) {
     prevTick = timestamp;
 
+    // update direction
+    if (state.input.up) {
+      nextState = {
+        ...nextState,
+        dir: UP,
+      };
+    } else if (state.input.down) {
+      nextState = {
+        ...nextState,
+        dir: DOWN,
+      };
+    } else if (state.input.left) {
+      nextState = {
+        ...nextState,
+        dir: LEFT,
+      };
+    } else if (state.input.right) {
+      nextState = {
+        ...nextState,
+        dir: RIGHT,
+      };
+    }
+
     // update the position
     nextState = {
       ...nextState,
-      snake: {
-        ...nextState.snake,
-        ...updatePos(state.snake.dir, state.snake.position, state.game.width, state.game.height),
-      },
+      ...updatePos(state.snake.dir, state.snake.position, state.game.width, state.game.height),
     };
   }
 
   return {
-    ...state,
-    ...nextState,
+    snake: {
+      ...nextState,
+    },
   };
 }
 

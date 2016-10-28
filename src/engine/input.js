@@ -1,6 +1,8 @@
 import { UP_KEY, DOWN_KEY, LEFT_KEY, RIGHT_KEY } from 'constants/directions';
 
-function inputStateByKeyCode(keyCode) {
+let state = {};
+
+export function inputStateByKeyCode(currentState, keyCode, off = false) {
   return {
     up: keyCode === UP_KEY,
     down: keyCode === DOWN_KEY,
@@ -10,20 +12,24 @@ function inputStateByKeyCode(keyCode) {
   };
 }
 
-export default function listenToInput(setState = () => {}) {
-  setState({
-    input: inputStateByKeyCode(null),
-  });
+export function inputState() {
+  return { input: state };
+}
+
+export function listenToInput() {
+  state = inputStateByKeyCode({}, null);
 
   window.addEventListener('keydown', (e) => {
-    setState({
-      input: inputStateByKeyCode(e.keyCode),
-    });
+    state = {
+      ...state,
+      ...inputStateByKeyCode(state, e.keyCode),
+    };
   });
 
   window.addEventListener('keyup', (e) => {
-    setState({
-      input: inputStateByKeyCode(null),
-    });
+    state = {
+      ...state,
+      ...inputStateByKeyCode(state, e.keyCode),
+    };
   });
 }
