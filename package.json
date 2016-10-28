@@ -1,0 +1,17 @@
+{
+  "name": "webpack-babel-starter",
+  "version": "1.0.0",
+  "description": "webpack starter with babel",
+  "main": "./src",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gaya/webpack-babel-starter.git"
+  },
+  "author": "Gaya Kessler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gaya/webpack-babel-starter/issues"
+  },
+  "homepage": "https://github.com/Gaya/webpack-babel-starter#readme"
+}
