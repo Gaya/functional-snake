@@ -1,20 +1,21 @@
-#Simple webpack starter kit
+#Functional Snake
 
-Just the basics you need to start using webpack and babel. Nothing fancy, just start already!
+My little attempt at creating a 'snake' clone from scratch. Using important lessons from functional programming and keeping things pure.
 
-Includes:
-- webpack
-- webpack dev server
-- babel with es2015 and stage-2 presets
-- eslint (airbnb preset)
+##Running
 
-How to use:
+1. Clone repo
+
+2. Install dependencies
 
 ```
-$ npm install
-$ npm run serve
+npm install
 ```
 
-This will start the webpack-dev-server at [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/).
+3. Serve application
 
-It copies the contents from `assets/` into `dist/` and copies `assets/index.html` to `dist/index.html`. This is your project's entry point.
+```
+npm run serve
+```
+
+4. Go to [http://localhost:8080](http://localhost:8080) or [http://localhost:8080/webpack-dev-server](http://localhost:8080/webpack-dev-server)

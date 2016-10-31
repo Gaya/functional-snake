@@ -3,10 +3,9 @@ import { isSame } from 'core/is-same';
 import { scaledPosition } from 'core/scaled-position';
 import { snakeTouchesFood } from './food';
 
-let prevTick = 0;
-
 export const setup = {
   snake: {
+    prevTick: 0,
     dead: false,
     position: {
       x: 1,
@@ -26,32 +25,28 @@ function updatePos(dir, currentPosition) {
   };
 }
 
-function colidesWithTail(position, tail) {
+function collidesWithTail(position, tail) {
   return tail.filter(tailPosition => isSame(position, tailPosition)).length > 0;
 }
 
 function nextDirectionState(state) {
-  let nextState = { ...state.snake };
+  let nextState = {};
 
   // update direction
   if (state.input.up && !isSame(state.snake.dir, DOWN)) {
     nextState = {
-      ...nextState,
       dir: UP,
     };
   } else if (state.input.down && !isSame(state.snake.dir, UP)) {
     nextState = {
-      ...nextState,
       dir: DOWN,
     };
   } else if (state.input.left && !isSame(state.snake.dir, RIGHT)) {
     nextState = {
-      ...nextState,
       dir: LEFT,
     };
   } else if (state.input.right && !isSame(state.snake.dir, LEFT)) {
     nextState = {
-      ...nextState,
       dir: RIGHT,
     };
   }
@@ -69,12 +64,15 @@ export function update({ timestamp, state = {} }) {
   if (
     !state.game.paused &&
     !state.snake.dead &&
-    timestamp - (100 / (0.9 + (0.05 * state.snake.tail.length))) > prevTick
+    timestamp - (100 / (0.9 + (0.05 * state.snake.tail.length))) > state.snake.prevTick
   ) {
-    prevTick = timestamp;
+    nextState.prevTick = timestamp;
 
     // update direction
-    nextState = nextDirectionState(state);
+    nextState = {
+      ...nextState,
+      ...nextDirectionState(state),
+    };
 
     // update the position
     nextState = {
@@ -82,11 +80,11 @@ export function update({ timestamp, state = {} }) {
       ...updatePos(state.snake.dir, state.snake.position),
     };
 
-    // check if colides with walls or tail
+    // check if collides with walls or tail
     if (
       (nextState.position.x < 0 || nextState.position.x >= state.game.width) ||
       (nextState.position.y < 0 || nextState.position.y >= state.game.height) ||
-      colidesWithTail(nextState.position, state.snake.tail)
+      collidesWithTail(nextState.position, state.snake.tail)
     ) {
       nextState = {
         ...state.snake,
