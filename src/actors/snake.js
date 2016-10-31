@@ -60,10 +60,14 @@ function nextDirectionState(state) {
 }
 
 export function update({ timestamp, state = {} }) {
+  if (!state.game.started) {
+    return;
+  }
+
   let nextState = { ...state.snake };
 
   if (
-    !(state.game.started || state.game.paused) &&
+    !state.game.paused &&
     !state.snake.dead &&
     timestamp - (100 / (0.9 + (0.05 * state.snake.tail.length))) > prevTick
   ) {
@@ -127,6 +131,10 @@ function createSnakePartDrawer(ctx, scale) {
 }
 
 export function draw({ state = setup, canvas = null }) {
+  if (!state.game.started) {
+    return;
+  }
+
   const ctx = canvas.getContext();
 
   ctx.fillStyle = 'white';

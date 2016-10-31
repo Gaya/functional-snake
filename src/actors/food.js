@@ -35,6 +35,10 @@ export function setup(currentState, width, height) {
 }
 
 export function update({ state = {} }) {
+  if (!state.game.started) {
+    return;
+  }
+
   let newState = { ...state.food };
 
   if (snakeTouchesFood(state.snake, state.food)) {
@@ -45,6 +49,10 @@ export function update({ state = {} }) {
 }
 
 export function draw({ state = setup, canvas = null }) {
+  if (!state.game.started) {
+    return;
+  }
+
   const ctx = canvas.getContext();
 
   ctx.fillStyle = 'red';
