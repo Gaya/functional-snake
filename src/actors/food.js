@@ -36,7 +36,7 @@ export function setup(currentState, width, height) {
 
 export function update({ state = {} }) {
   if (!state.game.started) {
-    return;
+    return {};
   }
 
   let newState = { ...state.food };

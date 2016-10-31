@@ -19,7 +19,7 @@ export function setup({ state = {} }) {
     input: inputState().input,
     game: {
       started: false,
-      paused: true,
+      paused: false,
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
       scale: GAME_SCALE,

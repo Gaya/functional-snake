@@ -1,4 +1,5 @@
 import { UP_KEY, DOWN_KEY, LEFT_KEY, RIGHT_KEY } from 'constants/directions';
+import { SPACE_KEY, PAUSE_KEY } from 'constants/keys';
 
 let state = {};
 let currentlyPressed = [];
@@ -9,6 +10,8 @@ export function inputStateByKeyCode(keyCode) {
     down: keyCode === DOWN_KEY,
     left: keyCode === LEFT_KEY,
     right: keyCode === RIGHT_KEY,
+    space: keyCode === SPACE_KEY,
+    pause: keyCode === PAUSE_KEY,
     keyCode,
   };
 }

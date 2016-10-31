@@ -61,7 +61,7 @@ function nextDirectionState(state) {
 
 export function update({ timestamp, state = {} }) {
   if (!state.game.started) {
-    return;
+    return {};
   }
 
   let nextState = { ...state.snake };
