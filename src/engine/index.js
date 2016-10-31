@@ -1,5 +1,6 @@
-import { GAME_WIDTH, GAME_HEIGHT, GAME_SCALE } from 'constants/game';
+import { GAME_WIDTH, GAME_HEIGHT } from 'constants/game';
 
+import { setup as setupGame, update as updateGame } from 'actors/game';
 import { update as updateBg, draw as drawBg } from 'actors/background';
 import { setup as setupStartScreen, update as updateStartScreen, draw as drawStartScreen }
   from 'actors/start-screen';
@@ -13,23 +14,18 @@ export function setup({ state = {} }) {
 
   return {
     ...state,
+    ...setupGame,
     ...setupSnake,
     ...setupFood(state, GAME_WIDTH, GAME_HEIGHT),
     ...setupStartScreen,
     input: inputState().input,
-    game: {
-      started: false,
-      paused: false,
-      width: GAME_WIDTH,
-      height: GAME_HEIGHT,
-      scale: GAME_SCALE,
-    },
   };
 }
 
 export function update({ timestamp = 0, state = {} }) {
   return [
     inputState,
+    updateGame,
     updateBg,
     updateStartScreen,
     updateSnake,
