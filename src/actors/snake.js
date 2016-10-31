@@ -63,7 +63,7 @@ export function update({ timestamp, state = {} }) {
   let nextState = { ...state.snake };
 
   if (
-    !state.game.paused &&
+    !(state.game.started || state.game.paused) &&
     !state.snake.dead &&
     timestamp - (100 / (0.9 + (0.05 * state.snake.tail.length))) > prevTick
   ) {

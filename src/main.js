@@ -9,6 +9,9 @@ function setState(newState) {
   state = newState;
 }
 
+// set focus to window
+window.focus();
+
 // get initial state after setup
 setState(setup({ state }));
 

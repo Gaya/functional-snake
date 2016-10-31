@@ -15,7 +15,8 @@ export function setup({ state = {} }) {
     ...setupFood(state, GAME_WIDTH, GAME_HEIGHT),
     input: inputState().input,
     game: {
-      paused: false,
+      started: false,
+      paused: true,
       width: GAME_WIDTH,
       height: GAME_HEIGHT,
       scale: GAME_SCALE,
@@ -41,7 +42,7 @@ export function update({ timestamp = 0, state = {} }) {
 export function draw({ state = {}, canvas = null }) {
   [
     drawBg,
-    drawSnake,
-    drawFood,
+    state.game.started ? drawSnake : () => {},
+    state.game.started ? drawFood : () => {},
   ].forEach(f => f({ state, canvas }));
 }
