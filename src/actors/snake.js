@@ -30,6 +30,35 @@ function colidesWithTail(position, tail) {
   return tail.filter(tailPosition => isSame(position, tailPosition)).length > 0;
 }
 
+function nextDirectionState(state) {
+  let nextState = { ...state.snake };
+
+  // update direction
+  if (state.input.up && !isSame(state.snake.dir, DOWN)) {
+    nextState = {
+      ...nextState,
+      dir: UP,
+    };
+  } else if (state.input.down && !isSame(state.snake.dir, UP)) {
+    nextState = {
+      ...nextState,
+      dir: DOWN,
+    };
+  } else if (state.input.left && !isSame(state.snake.dir, RIGHT)) {
+    nextState = {
+      ...nextState,
+      dir: LEFT,
+    };
+  } else if (state.input.right && !isSame(state.snake.dir, LEFT)) {
+    nextState = {
+      ...nextState,
+      dir: RIGHT,
+    };
+  }
+
+  return nextState;
+}
+
 export function update({ timestamp, state = {} }) {
   let nextState = { ...state.snake };
 
@@ -41,27 +70,7 @@ export function update({ timestamp, state = {} }) {
     prevTick = timestamp;
 
     // update direction
-    if (state.input.up && !isSame(state.snake.dir, DOWN)) {
-      nextState = {
-        ...nextState,
-        dir: UP,
-      };
-    } else if (state.input.down && !isSame(state.snake.dir, UP)) {
-      nextState = {
-        ...nextState,
-        dir: DOWN,
-      };
-    } else if (state.input.left && !isSame(state.snake.dir, RIGHT)) {
-      nextState = {
-        ...nextState,
-        dir: LEFT,
-      };
-    } else if (state.input.right && !isSame(state.snake.dir, LEFT)) {
-      nextState = {
-        ...nextState,
-        dir: RIGHT,
-      };
-    }
+    nextState = nextDirectionState(state);
 
     // update the position
     nextState = {
