@@ -1,13 +1,14 @@
 import { UP_KEY, DOWN_KEY, LEFT_KEY, RIGHT_KEY } from 'constants/directions';
 
 let state = {};
+let currentlyPressed = [];
 
-export function inputStateByKeyCode(currentState, keyCode, off = false) {
+export function inputStateByKeyCode(keyCode) {
   return {
-    up: keyCode === UP_KEY && (!currentState.up || off),
-    down: keyCode === DOWN_KEY && (!currentState.down || off),
-    left: keyCode === LEFT_KEY && (!currentState.left || off),
-    right: keyCode === RIGHT_KEY && (!currentState.right || off),
+    up: keyCode === UP_KEY,
+    down: keyCode === DOWN_KEY,
+    left: keyCode === LEFT_KEY,
+    right: keyCode === RIGHT_KEY,
     keyCode,
   };
 }
@@ -20,16 +21,19 @@ export function listenToInput() {
   state = inputStateByKeyCode({}, null);
 
   window.addEventListener('keydown', (e) => {
-    state = {
-      ...state,
-      ...inputStateByKeyCode(state, e.keyCode),
-    };
+    currentlyPressed =
+      currentlyPressed
+        .filter(keyCode => keyCode !== e.keyCode)
+        .concat(e.keyCode);
+
+    state = inputStateByKeyCode(currentlyPressed[0]);
   });
 
   window.addEventListener('keyup', (e) => {
-    state = {
-      ...state,
-      ...inputStateByKeyCode(state, e.keyCode),
-    };
+    currentlyPressed =
+      currentlyPressed
+        .filter(keyCode => keyCode !== e.keyCode);
+
+    state = inputStateByKeyCode(currentlyPressed[0]);
   });
 }
