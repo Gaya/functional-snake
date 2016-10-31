@@ -2,6 +2,10 @@
 
 My little attempt at creating a 'snake' clone from scratch. Using important lessons from functional programming and keeping things pure.
 
+##Demo
+
+Play the game yourself at: [http://gaya.github.io/snake/](http://gaya.github.io/snake/).
+
 ##Running
 
 1. Clone repo
