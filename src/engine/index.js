@@ -23,8 +23,12 @@ export function setup({ state = {} }) {
 }
 
 export function update({ timestamp = 0, state = {} }) {
+  const stateWithInput = {
+    ...state,
+    ...inputState({ timestamp, state }),
+  };
+
   return [
-    inputState,
     updateGame,
     updateBg,
     updateStartScreen,
@@ -32,7 +36,7 @@ export function update({ timestamp = 0, state = {} }) {
     updateFood,
   ].map(
     f =>
-      Object.assign({}, f({ timestamp, state }))
+      Object.assign({}, f({ timestamp, state: stateWithInput }))
   ).reduce(
     (a, b) =>
       Object.assign({}, a, b)

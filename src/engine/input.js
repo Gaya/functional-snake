@@ -20,6 +20,10 @@ export function inputState() {
   return { input: state };
 }
 
+function lastInput(inputs) {
+  return inputs[inputs.length - 1];
+}
+
 export function listenToInput() {
   state = inputStateByKeyCode({}, null);
 
@@ -29,7 +33,7 @@ export function listenToInput() {
         .filter(keyCode => keyCode !== e.keyCode)
         .concat(e.keyCode);
 
-    state = inputStateByKeyCode(currentlyPressed[0]);
+    state = inputStateByKeyCode(lastInput(currentlyPressed));
   });
 
   window.addEventListener('keyup', (e) => {
@@ -37,6 +41,6 @@ export function listenToInput() {
       currentlyPressed
         .filter(keyCode => keyCode !== e.keyCode);
 
-    state = inputStateByKeyCode(currentlyPressed[0]);
+    state = inputStateByKeyCode(lastInput(currentlyPressed));
   });
 }
