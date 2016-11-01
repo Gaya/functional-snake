@@ -3,7 +3,7 @@ const env = process.argv.indexOf('--optimize-minimize') > -1 ? 'build' : 'dev';
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: env === 'build' ? `${__dirname}/` : `${__dirname}/dist/`,
+    path: `${__dirname}/dist/`,
     publicPath: '/assets',
     filename: 'build.js',
   },
