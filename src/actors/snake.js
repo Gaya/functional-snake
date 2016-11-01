@@ -54,6 +54,14 @@ function nextDirectionState(state) {
   return nextState;
 }
 
+function snakeSpeed(snake) {
+  return (0.9 + (0.05 * snake.tail.length));
+}
+
+function tickTime(snake) {
+  return (100 / snakeSpeed(snake));
+}
+
 export function update({ timestamp, state = {} }) {
   if (!state.game.started) {
     return {};
@@ -64,7 +72,7 @@ export function update({ timestamp, state = {} }) {
   if (
     !state.game.paused &&
     !state.snake.dead &&
-    timestamp - (100 / (0.9 + (0.05 * state.snake.tail.length))) > state.snake.prevTick
+    timestamp - tickTime(state.snake) > state.snake.prevTick
   ) {
     nextState.prevTick = timestamp;
 
