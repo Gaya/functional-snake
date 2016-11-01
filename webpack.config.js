@@ -1,15 +1,17 @@
+const env = process.argv.indexOf('--optimize-minimize') > -1 ? 'build' : 'dev';
+
 module.exports = {
   entry: './src/main.js',
   output: {
-    path: `${__dirname}/dist/`,
+    path: env === 'build' ? `${__dirname}/` : `${__dirname}/dist/`,
     publicPath: '/assets',
     filename: 'build.js',
   },
-  devtool: 'source-map',
+  devtool: env === 'build' ? null : 'source-map',
   resolve: {
     root: [
       `${__dirname}/src`,
-      `${__dirname}/node_modules`,             // npm
+      `${__dirname}/node_modules`,
     ],
   },
   module: {

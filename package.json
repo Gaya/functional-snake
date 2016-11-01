@@ -4,6 +4,8 @@
   "description": "webpack starter with babel",
   "main": "./src",
   "scripts": {
+    "build": "npm run empty-dist && npm run copy-assets && npm run build-webpack",
+    "build-webpack": "node ./node_modules/.bin/webpack --config webpack.config.js --optimize-minimize",
     "serve": "npm run empty-dist && npm run copy-assets && npm run dev-server",
     "empty-dist": "rm -rf dist && mkdir dist && mkdir dist/assets",
     "copy-assets": "cp -r assets/* dist/assets/ && cp assets/index.html dist/index.html",
