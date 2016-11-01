@@ -43,11 +43,11 @@ export function update({ timestamp = 0, state = {} }) {
   );
 }
 
-export function draw({ state = {}, canvas = null }) {
+export function draw({ timestamp = 0, state = {}, canvas = null }) {
   [
     drawBg,
     drawStartScreen,
     drawSnake,
     drawFood,
-  ].forEach(f => f({ state, canvas }));
+  ].forEach(f => f({ timestamp, state, canvas }));
 }

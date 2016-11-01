@@ -23,7 +23,7 @@ function tick(timestamp) {
   });
 
   // draw canvas from state
-  draw({ state, canvas });
+  draw({ timestamp, state, canvas });
 
   window.requestAnimationFrame(tick);
 }
