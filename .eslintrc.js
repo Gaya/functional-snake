@@ -1,15 +1,15 @@
 module.exports = {
-    "extends": "airbnb",
-    "installedESLint": true,
-    "globals": {
-        "document": true,
-        "window": true,
+    extends: 'airbnb',
+    installedESLint: true,
+    globals: {
+        document: true,
+        window: true,
     },
-    "settings": {
-        "import/resolver": {
-            "webpack": {
-                "config": "webpack.config.js"
-            }
-        }
-    }
+    settings: {
+        'import/resolver': {
+            webpack: {
+                config: 'webpack.config.js',
+            },
+        },
+    },
 };
