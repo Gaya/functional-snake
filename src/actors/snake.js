@@ -11,7 +11,7 @@ export const setup = {
       x: 1,
       y: 1,
     },
-    tail: [],
+    tail: [{ x: 0, y: 1 }],
     dir: RIGHT,
   },
 };
