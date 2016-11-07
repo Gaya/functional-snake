@@ -4,6 +4,7 @@ import { setup as setupGame, update as updateGame } from 'actors/game';
 import { update as updateBg, draw as drawBg } from 'actors/background';
 import { setup as setupStartScreen, update as updateStartScreen, draw as drawStartScreen }
   from 'actors/start-screen';
+import drawScore from 'actors/score';
 import { setup as setupSnake, update as updateSnake, draw as drawSnake } from 'actors/snake';
 import { setup as setupFood, update as updateFood, draw as drawFood } from 'actors/food';
 
@@ -47,6 +48,7 @@ export function draw({ timestamp = 0, state = {}, canvas = null }) {
   [
     drawBg,
     drawStartScreen,
+    drawScore,
     drawSnake,
     drawFood,
   ].forEach(f => f({ timestamp, state, canvas }));
