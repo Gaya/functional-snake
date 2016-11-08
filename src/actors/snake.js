@@ -118,6 +118,12 @@ export function update({ timestamp, state = {} }) {
     }
   }
 
+  if (state.snake.dead && state.input.space) {
+    return {
+      snake: setup.snake,
+    };
+  }
+
   return {
     snake: {
       ...nextState,
