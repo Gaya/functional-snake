@@ -1,5 +1,5 @@
 import { UP, DOWN, LEFT, RIGHT } from 'constants/directions';
-import { isSame } from 'core/is-same';
+import { isSamePosition } from 'core/is-same-position';
 import { scaledPosition } from 'core/scaled-position';
 import { snakeTouchesFood } from './food';
 
@@ -26,26 +26,26 @@ function updatePos(dir, currentPosition) {
 }
 
 function collidesWithTail(position, tail) {
-  return tail.filter(tailPosition => isSame(position, tailPosition)).length > 0;
+  return tail.filter(tailPosition => isSamePosition(position, tailPosition)).length > 0;
 }
 
 function nextDirectionState(state) {
   let nextState = {};
 
   // update direction
-  if (state.input.up && !isSame(state.snake.dir, DOWN)) {
+  if (state.input.up && !isSamePosition(state.snake.dir, DOWN)) {
     nextState = {
       dir: UP,
     };
-  } else if (state.input.down && !isSame(state.snake.dir, UP)) {
+  } else if (state.input.down && !isSamePosition(state.snake.dir, UP)) {
     nextState = {
       dir: DOWN,
     };
-  } else if (state.input.left && !isSame(state.snake.dir, RIGHT)) {
+  } else if (state.input.left && !isSamePosition(state.snake.dir, RIGHT)) {
     nextState = {
       dir: LEFT,
     };
-  } else if (state.input.right && !isSame(state.snake.dir, LEFT)) {
+  } else if (state.input.right && !isSamePosition(state.snake.dir, LEFT)) {
     nextState = {
       dir: RIGHT,
     };
