@@ -49,9 +49,9 @@ export function draw({ timestamp = 0, state = {}, canvas = null }) {
   [
     drawBg,
     drawStartScreen,
-    drawRestart,
-    drawScore,
     drawSnake,
     drawFood,
+    drawRestart,
+    drawScore,
   ].forEach(f => f({ timestamp, state, canvas }));
 }
