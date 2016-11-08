@@ -149,7 +149,7 @@ export function draw({ state = setup, canvas = null }) {
 
   const ctx = canvas.getContext();
 
-  ctx.fillStyle = 'white';
+  ctx.fillStyle = state.snake.dead ? 'black' : 'white';
   createSnakePartDrawer(ctx, state.game.scale)(state.snake.position);
   state.snake.tail.forEach(createSnakePartDrawer(ctx, state.game.scale));
 }
