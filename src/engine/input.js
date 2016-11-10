@@ -1,7 +1,7 @@
 import { UP_KEY, DOWN_KEY, LEFT_KEY, RIGHT_KEY } from 'constants/directions';
 import { SPACE_KEY, PAUSE_KEY } from 'constants/keys';
 
-let state = {};
+let keyState = {};
 let currentlyPressed = [];
 
 export function inputStateByKeyCode(keyCode) {
@@ -17,7 +17,9 @@ export function inputStateByKeyCode(keyCode) {
 }
 
 export function inputState() {
-  return { input: state };
+  return {
+    input: keyState,
+  };
 }
 
 function lastInput(inputs) {
@@ -25,7 +27,7 @@ function lastInput(inputs) {
 }
 
 export function listenToInput() {
-  state = inputStateByKeyCode({}, null);
+  keyState = inputStateByKeyCode({}, null);
 
   window.addEventListener('keydown', (e) => {
     currentlyPressed =
@@ -33,7 +35,7 @@ export function listenToInput() {
         .filter(keyCode => keyCode !== e.keyCode)
         .concat(e.keyCode);
 
-    state = inputStateByKeyCode(lastInput(currentlyPressed));
+    keyState = inputStateByKeyCode(lastInput(currentlyPressed));
   });
 
   window.addEventListener('keyup', (e) => {
@@ -41,6 +43,6 @@ export function listenToInput() {
       currentlyPressed
         .filter(keyCode => keyCode !== e.keyCode);
 
-    state = inputStateByKeyCode(lastInput(currentlyPressed));
+    keyState = inputStateByKeyCode(lastInput(currentlyPressed));
   });
 }

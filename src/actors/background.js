@@ -1,7 +1,3 @@
-export function update() {
-  return {};
-}
-
 export function draw({ state = { game: { width: 60, height: 60 } }, canvas = null }) {
   const ctx = canvas.getContext();
 

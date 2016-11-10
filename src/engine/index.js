@@ -1,7 +1,7 @@
 import { GAME_WIDTH, GAME_HEIGHT } from 'constants/game';
 
 import { setup as setupGame, update as updateGame } from 'actors/game';
-import { update as updateBg, draw as drawBg } from 'actors/background';
+import { draw as drawBg } from 'actors/background';
 import { setup as setupStartScreen, update as updateStartScreen, draw as drawStartScreen }
   from 'actors/start-screen';
 import { draw as drawRestart } from 'actors/restart-screen';
@@ -12,23 +12,19 @@ import { setup as setupFood, update as updateFood, draw as drawFood } from 'acto
 import { listenToInput, inputState } from './input';
 
 function update({ timestamp = 0, state = {} }) {
-  const stateWithInput = {
-    ...state,
-    ...inputState({ timestamp, state }),
-  };
-
   return [
+    state,
+    inputState,
     updateGame,
-    updateBg,
     updateStartScreen,
     updateSnake,
     updateFood,
-  ].map(
-    f =>
-      Object.assign({}, f({ timestamp, state: stateWithInput }))
-  ).reduce(
-    (a, b) =>
-      Object.assign({}, a, b)
+  ].reduce(
+    (newState, f) =>
+      ({
+        ...newState,
+        ...f({ timestamp, state: newState }),
+      })
   );
 }
 
@@ -68,7 +64,7 @@ function setup(canvas) {
     ...setupSnake,
     ...setupFood({}, GAME_WIDTH, GAME_HEIGHT),
     ...setupStartScreen,
-    input: inputState().input,
+    input: inputState({}).input,
   };
 
   // first tick of program

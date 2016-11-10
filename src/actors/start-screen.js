@@ -8,10 +8,6 @@ export const setup = {
 };
 
 export function update({ timestamp, state = {} }) {
-  if (timestamp - state.startScreen.prevCheck < 100) {
-    return state.startScreen;
-  }
-
   if (state.input.space) {
     return {
       game: {
@@ -19,6 +15,10 @@ export function update({ timestamp, state = {} }) {
         started: true,
       },
     };
+  }
+
+  if (timestamp - state.startScreen.prevCheck < 100) {
+    return {};
   }
 
   return {

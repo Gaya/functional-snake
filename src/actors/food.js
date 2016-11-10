@@ -48,7 +48,9 @@ export function update({ state = {} }) {
     newState = randomPositionFood(state.snake, state.game.width, state.game.height);
   }
 
-  return { food: newState };
+  return {
+    food: newState,
+  };
 }
 
 export function draw({ state = setup, canvas = null }) {
