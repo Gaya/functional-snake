@@ -41,10 +41,7 @@ export function update({ state = {} }) {
 
   let newState = { ...state.food };
 
-  if (
-    (state.snake.dead && state.input.space) ||
-    snakeTouchesFood(state.snake, state.food)
-  ) {
+  if ((state.snake.dead && state.input.space) || snakeTouchesFood(state.snake, state.food)) {
     newState = randomPositionFood(state.snake, state.game.width, state.game.height);
   }
 

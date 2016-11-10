@@ -8,15 +8,6 @@ export const setup = {
 };
 
 export function update({ timestamp, state = {} }) {
-  if (state.input.space) {
-    return {
-      game: {
-        ...state.game,
-        started: true,
-      },
-    };
-  }
-
   if (timestamp - state.startScreen.prevCheck < 100) {
     return {};
   }
