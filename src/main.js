@@ -10,23 +10,19 @@ const initialState = setup({});
 // set focus to window
 window.focus();
 
-function injectStateToTick(state, cb) {
-  return timestamp => cb(timestamp, state);
-}
-
-function tick(timestamp, state) {
+function tick(timestamp, prevState) {
   // calculate new state
-  const newState = {
-    ...state,
-    ...update({ timestamp, state }),
+  const nextState = {
+    ...prevState,
+    ...update({ timestamp, state: prevState }),
   };
 
   // draw canvas from state
-  draw({ timestamp, state: newState, canvas });
+  draw({ timestamp, state: nextState, canvas });
 
   // execute again next animation frame
   window.requestAnimationFrame(
-    injectStateToTick(newState, tick)
+    nextTimestamp => tick(nextTimestamp, nextState)
   );
 }
 
