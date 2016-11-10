@@ -24,7 +24,10 @@ function tick(timestamp, state) {
   // draw canvas from state
   draw({ timestamp, newState, canvas });
 
-  window.requestAnimationFrame(injectStateToTick(newState, tick));
+  // execute again next animation frame
+  window.requestAnimationFrame(
+    injectStateToTick(newState, tick)
+  );
 }
 
 // run program
