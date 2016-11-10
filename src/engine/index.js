@@ -11,20 +11,7 @@ import { setup as setupFood, update as updateFood, draw as drawFood } from 'acto
 
 import { listenToInput, inputState } from './input';
 
-export function setup({ state = {} }) {
-  listenToInput();
-
-  return {
-    ...state,
-    ...setupGame,
-    ...setupSnake,
-    ...setupFood(state, GAME_WIDTH, GAME_HEIGHT),
-    ...setupStartScreen,
-    input: inputState().input,
-  };
-}
-
-export function update({ timestamp = 0, state = {} }) {
+function update({ timestamp = 0, state = {} }) {
   const stateWithInput = {
     ...state,
     ...inputState({ timestamp, state }),
@@ -45,7 +32,7 @@ export function update({ timestamp = 0, state = {} }) {
   );
 }
 
-export function draw({ timestamp = 0, state = {}, canvas = null }) {
+function draw({ timestamp = 0, state = {}, canvas = null }) {
   [
     drawBg,
     drawStartScreen,
@@ -55,3 +42,37 @@ export function draw({ timestamp = 0, state = {}, canvas = null }) {
     drawScore,
   ].forEach(f => f({ timestamp, state, canvas }));
 }
+
+function tick(timestamp, prevState, canvas) {
+  // calculate new state
+  const nextState = {
+    ...prevState,
+    ...update({ timestamp, state: prevState }),
+  };
+
+  // draw canvas from state
+  draw({ timestamp, state: nextState, canvas });
+
+  // execute again next animation frame
+  window.requestAnimationFrame(
+    nextTimestamp => tick(nextTimestamp, nextState, canvas)
+  );
+}
+
+function setup(canvas) {
+  listenToInput();
+
+  // setup the initial state
+  const initialState = {
+    ...setupGame,
+    ...setupSnake,
+    ...setupFood({}, GAME_WIDTH, GAME_HEIGHT),
+    ...setupStartScreen,
+    input: inputState().input,
+  };
+
+  // first tick of program
+  tick(0, initialState, canvas);
+}
+
+export default setup;
